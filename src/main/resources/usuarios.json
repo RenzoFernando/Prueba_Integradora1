@@ -1,0 +1,53 @@
+[
+  {
+    "nombreUsuario": "q",
+    "contrasena": "q",
+    "nombres": "q",
+    "apellidos": "q",
+    "fechaNacimiento": "1",
+    "direccion": "1",
+    "ciudad": "1",
+    "telefono": "1",
+    "correo": "1",
+    "esAdministrador": true,
+    "tarjetas": [
+      null,
+      null,
+      null
+    ]
+  },
+  {
+    "nombreUsuario": "w",
+    "contrasena": "w",
+    "nombres": "w",
+    "apellidos": "w",
+    "fechaNacimiento": "23",
+    "direccion": "23",
+    "ciudad": "23",
+    "telefono": "23",
+    "correo": "23",
+    "esAdministrador": false,
+    "tarjetas": [
+      null,
+      null,
+      null
+    ]
+  },
+  {
+    "nombreUsuario": "e",
+    "contrasena": "e",
+    "nombres": "e",
+    "apellidos": "e",
+    "fechaNacimiento": "123",
+    "direccion": "123",
+    "ciudad": "123",
+    "telefono": "123",
+    "correo": "123",
+    "esAdministrador": true,
+    "tarjetas": [
+      null,
+      null,
+      null
+    ]
+  }
+]

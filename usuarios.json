@@ -1,0 +1,19 @@
+[
+  {
+    "nombreUsuario": "q",
+    "contrasena": "q",
+    "nombres": "1",
+    "apellidos": "1",
+    "fechaNacimiento": "1",
+    "direccion": "1",
+    "ciudad": "1",
+    "telefono": "1",
+    "correo": "1",
+    "esAdministrador": true,
+    "tarjetas": [
+      null,
+      null,
+      null
+    ]
+  }
+]
