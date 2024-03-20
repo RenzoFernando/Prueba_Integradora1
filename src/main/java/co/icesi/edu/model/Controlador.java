@@ -1,8 +1,9 @@
 package co.icesi.edu.model;
 
+//----------------------------------------------------------------//
+
 import co.icesi.edu.structures.ListaEnlazada;
 import co.icesi.edu.structures.Nodo;
-
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,16 +15,27 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+//----------------------------------------------------------------//
+
 public class Controlador {
 
+    //----------------------------------------------------------------//
+
     private ListaEnlazada<Usuario> listaUsuarios;
+    private ListaEnlazada<Producto> listaProductos;
+
+    //----------------------------------------------------------------//
 
 
     public Controlador() {
         this.listaUsuarios = new ListaEnlazada<>();
         cargarUsuarios();
+        this.listaProductos = new ListaEnlazada<>();
+        cargarProductos();
     }
 
+    //----------------------------------------------------------------//
+    //PARA LOS USUARIOS
     private void cargarUsuarios() {
         try {
             // Leer el archivo JSON de usuarios
@@ -49,7 +61,6 @@ public class Controlador {
     }
 
 
-
     private void guardarUsuarios() {
         try {
             // Configurar Gson para serializar la lista de usuarios
@@ -69,7 +80,7 @@ public class Controlador {
         }
     }
 
-
+    //----------------------------------------------------------------//
 
     private boolean existeUsuario(String nombreUsuario) {
         // Recorrer la lista de usuarios y verificar si existe un usuario con el mismo nombre de usuario
@@ -83,6 +94,8 @@ public class Controlador {
         }
         return false; // El usuario no existe
     }
+
+    //----------------------------------------------------------------//
 
     public boolean registrarUsuario(String nombreUsuario, String contrasena, String nombres, String apellidos,
                                     String fechaNacimiento, String direccion, String ciudad, String telefono, String correo,
@@ -103,11 +116,127 @@ public class Controlador {
         return true; // Registro exitoso
     }
 
-    public boolean iniciarSesion(String nombreUsuario, String contraseña) {
+    public boolean iniciarSesion(String nombreUsuario, String contrasena) {
+        // Buscar el usuario por su nombre de usuario
+        Usuario usuario = buscarUsuario(nombreUsuario);
+
+        // Verificar si se encontró un usuario con ese nombre de usuario
+        if (usuario != null) {
+            // Verificar si la contraseña coincide
+            if (usuario.getContrasena().equals(contrasena)) {
+                // Inicio de sesión exitoso
+                return true;
+            }
+        }
+        // Inicio de sesión fallido
+        return false;
+    }
+
+    public boolean esAdministrador(String nombreUsuario) {
+        // Buscar el usuario por su nombre de usuario
+        Usuario usuario = buscarUsuario(nombreUsuario);
+
+        // Verificar si se encontró un usuario con ese nombre de usuario
+        if (usuario != null) {
+            // Verificar si el usuario es administrador
+            return usuario.isEsAdministrador();
+        }
+        // Si no se encuentra el usuario, no se puede determinar si es administrador o no
+        return false;
+    }
+
+    private Usuario buscarUsuario(String nombreUsuario) {
+        Nodo<Usuario> nodoActual = listaUsuarios.getCabeza();
+        while (nodoActual != null) {
+            Usuario usuarioActual = nodoActual.getDato();
+            if (usuarioActual.getNombreUsuario().equals(nombreUsuario)) {
+                return usuarioActual;
+            }
+            nodoActual = nodoActual.getSiguiente();
+        }
+        return null; // Usuario no encontrado
+    }
+
+    //----------------------------------------------------------------//
+    //PARA LOS PRODUCTOS
+
+    public boolean agregarProducto(String nombre, String descripcion, double precio,
+                                   int cantidadDisponible, int categoria, int vecesComprado) {
+        // Verificar si ya existe un producto con el mismo nombre
+        if (existeProducto(nombre)) {
+            return false; // El producto ya existe
+        }
+
+        // Crear un nuevo producto con los datos proporcionados
+        Producto nuevoProducto = new Producto(nombre, descripcion, precio, cantidadDisponible, categoria, vecesComprado);
+
+        // Agregar el nuevo producto al catálogo
+        listaProductos.agregar(nuevoProducto);
+
+        guardarProductos();
+
+        // Devolver true si el producto se agregó correctamente
         return true;
     }
-    public boolean esAdministrador() {
-        return true;
+
+    private boolean existeProducto(String nombre) {
+        // Recorrer la lista de productos y verificar si existe un producto con el mismo nombre
+        Nodo<Producto> nodoActual = listaProductos.getCabeza();
+        while (nodoActual != null) {
+            Producto productoActual = nodoActual.getDato();
+            if (productoActual.getNombre().equals(nombre)) {
+                return true; // El producto ya existe
+            }
+            nodoActual = nodoActual.getSiguiente();
+        }
+        return false; // El producto no existe
     }
+
+    private void cargarProductos() {
+        try {
+            // Leer el archivo JSON de productos
+            FileReader reader = new FileReader("src/main/resources/productos.json");
+
+            // Configurar Gson para deserializar la lista de productos
+            Gson gson = new GsonBuilder().create();
+            Type tipoListaProductos = new TypeToken<List<Producto>>(){}.getType();
+
+            // Deserializar el JSON a una lista de productos
+            List<Producto> productos = gson.fromJson(reader, tipoListaProductos);
+
+            // Agregar los productos a la lista enlazada
+            for (Producto producto : productos) {
+                listaProductos.agregar(producto);
+            }
+
+            // Cerrar el lector
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void guardarProductos() {
+        try {
+            // Configurar Gson para serializar la lista de productos
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            // Convertir la lista enlazada de productos a JSON
+            String jsonProductos = gson.toJson(listaProductos.toArray());
+
+            // Escribir el JSON en un archivo
+            FileWriter writer = new FileWriter("src/main/resources/productos.json");
+            writer.write(jsonProductos);
+
+            // Cerrar el escritor
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    //----------------------------------------------------------------//
 }
 

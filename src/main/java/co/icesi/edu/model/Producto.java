@@ -7,8 +7,7 @@ public class Producto {
     private int cantidadDisponible;
     private ProductCategory categoria;
     private int vecesComprado;
-    private Producto siguiente; // Referencia al siguiente producto en la lista
-    private Producto anterior; // Referencia al producto anterior en la lista
+
 
     public Producto(String nombre, String descripcion, double precio, int cantidadDisponible,
                     int categoria, int vecesComprado) {
@@ -17,8 +16,6 @@ public class Producto {
         this.precio = precio;
         this.cantidadDisponible = cantidadDisponible;
         this.vecesComprado = vecesComprado;
-        this.siguiente = null;
-        this.anterior = null;
         switch (categoria) {
             case 1:
                 this.categoria = ProductCategory.BOOKS;
@@ -52,20 +49,52 @@ public class Producto {
 
     // Getters y setters
 
-    public Producto getSiguiente() {
-        return siguiente;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setSiguiente(Producto siguiente) {
-        this.siguiente = siguiente;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Producto getAnterior() {
-        return anterior;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setAnterior(Producto anterior) {
-        this.anterior = anterior;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getCantidadDisponible() {
+        return cantidadDisponible;
+    }
+
+    public void setCantidadDisponible(int cantidadDisponible) {
+        this.cantidadDisponible = cantidadDisponible;
+    }
+
+    public ProductCategory getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(ProductCategory categoria) {
+        this.categoria = categoria;
+    }
+
+    public int getVecesComprado() {
+        return vecesComprado;
+    }
+
+    public void setVecesComprado(int vecesComprado) {
+        this.vecesComprado = vecesComprado;
     }
 
     // Otros métodos de la clase

@@ -1,0 +1,10 @@
+[
+  {
+    "nombre": "holi",
+    "descripcion": "hello",
+    "precio": 12.0,
+    "cantidadDisponible": 2,
+    "categoria": "BOOKS",
+    "vecesComprado": 0
+  }
+]

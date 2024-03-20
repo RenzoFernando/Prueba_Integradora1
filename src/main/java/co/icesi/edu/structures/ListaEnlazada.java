@@ -69,6 +69,17 @@ public class ListaEnlazada<T> implements Iterable<T> {
         }
     }
 
+    public void recorrerAlReves() {
+        Nodo<T> actual = cabeza;
+        while (actual != null && actual.getSiguiente() != null) {
+            actual = actual.getSiguiente();
+        }
+        while (actual != null) {
+            System.out.println(actual.getDato());
+            actual = actual.getAnterior();
+        }
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new ListaEnlazadaIterator();

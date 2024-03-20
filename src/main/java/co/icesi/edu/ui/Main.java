@@ -1,13 +1,15 @@
 package co.icesi.edu.ui;
 
 import co.icesi.edu.model.Controlador;
-
-
 import java.util.Scanner;
+
+//----------------------------------------------------------------//
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static Controlador controlador = new Controlador();
+
+    //----------------------------------------------------------------//
 
     public static void main(String[] args) {
         boolean salir = false;
@@ -39,6 +41,8 @@ public class Main {
         scanner.close();
     }
 
+    //----------------------------------------------------------------//
+
     private static void iniciarSesion() {
         System.out.print("Ingrese su nombre de usuario: ");
         String nombreUsuario = scanner.nextLine();
@@ -49,7 +53,7 @@ public class Main {
         boolean sesionIniciada = controlador.iniciarSesion(nombreUsuario, contraseña);
         if (sesionIniciada) {
             System.out.println("¡Inicio de sesión exitoso!");
-            if (!controlador.esAdministrador()) {
+            if (!controlador.esAdministrador(nombreUsuario)) {
                 menuUsuario();
             } else {
                 menuAdministrador();
@@ -58,6 +62,8 @@ public class Main {
             System.out.println("Inicio de sesión fallido. Verifique sus credenciales.");
         }
     }
+
+    //----------------------------------------------------------------//
 
 
     private static void registrarUsuario() {
@@ -80,9 +86,20 @@ public class Main {
         String telefono = scanner.nextLine();
         System.out.print("Ingrese su correo electrónico: ");
         String correo = scanner.nextLine();
-        System.out.print("¿Es administrador de la tienda? (true/false): ");
-        boolean esAdministrador = scanner.nextBoolean();
-        scanner.nextLine(); // Consumir el salto de línea
+        boolean esAdministrador = false;
+        int opcion = 0;
+        do {
+            System.out.print("¿Es administrador de la tienda? (1: Sí / 2: No): ");
+            opcion = scanner.nextInt();
+            if (opcion == 1) {
+                esAdministrador = true;
+            } else if (opcion == 2) {
+                esAdministrador = false;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione 1 o 2.");
+            }
+            scanner.nextLine();
+        } while (opcion != 1 && opcion != 2);
 
         // Llamar al método del controlador para registrar el usuario
         boolean registroExitoso = controlador.registrarUsuario(nombreUsuario, contrasena, nombres, apellidos,
@@ -96,15 +113,16 @@ public class Main {
         }
     }
 
+    //----------------------------------------------------------------//
 
     private static void menuUsuario() {
         System.out.println("Bienvenido a Tienda Libre");
         System.out.println("1. Ver catálogo de productos");
         System.out.println("2. Buscar producto");
-        System.out.println("3. Ver carrito de compras");
+        System.out.println("3. Ver carrito de compras"); //print
         System.out.println("4. Realizar pedido");
-        System.out.println("5. Ver historial de pedidos");
-        System.out.println("6. Configuración de cuenta");
+        System.out.println("5. Ver historial de pedidos"); //json que guarde y filtre por nombre?
+        System.out.println("6. Configuración de cuenta");  //ñao
         System.out.println("7. Cerrar sesión");
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();
@@ -138,14 +156,16 @@ public class Main {
         }
     }
 
+    //----------------------------------------------------------------//
+
     private static void menuAdministrador() {
         System.out.println("Bienvenido a Tienda Libre (Modo Administrador)");
         System.out.println("1. Ver catálogo de productos");
         System.out.println("2. Buscar producto");
-        System.out.println("3. Agregar producto al catálogo");
-        System.out.println("4. Eliminar producto del catálogo");
+        System.out.println("3. Agregar producto al catálogo"); //YAP
+        System.out.println("4. Eliminar producto del catálogo"); //NO REQUERIMIENTO
         System.out.println("5. Ver lista de usuarios");
-        System.out.println("6. Ver historial de pedidos");
+        System.out.println("6. Ver historial de pedidos"); //si archovo json
         System.out.println("7. Cerrar sesión");
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();
@@ -159,7 +179,8 @@ public class Main {
                 // Implementar método para buscar producto
                 break;
             case 3:
-                // Implementar método para agregar producto al catálogo
+                agregarProductoCatalogo();
+                menuAdministrador();
                 break;
             case 4:
                 // Implementar método para eliminar producto del catálogo
@@ -176,6 +197,65 @@ public class Main {
             default:
                 System.out.println("Opción inválida. Por favor, seleccione una opción válida.");
                 break;
+        }
+    }
+
+    //----------------------------------------------------------------//
+    //AGREGAR PRODUCTO AL CATALOGO
+    private static void agregarProductoCatalogo() {
+        System.out.println("¡Bienvenido al sistema de gestión de ventas en línea!");
+        System.out.println("Por favor, ingrese los datos del nuevo producto:");
+
+        System.out.print("Nombre del producto: ");
+        String nombre = scanner.nextLine();
+
+        System.out.print("Descripción del producto: ");
+        String descripcion = scanner.nextLine();
+
+        System.out.print("Precio del producto: ");
+        double precio = scanner.nextDouble();
+
+        System.out.print("Cantidad disponible del producto: ");
+        int cantidadDisponible = scanner.nextInt();
+
+        scanner.nextLine(); // Limpiar el buffer del scanner
+
+        // Solicitar y validar la categoría del producto
+        int categoria = 0;
+        do {
+            System.out.println("Categorías disponibles:");
+            System.out.println("1. Libros");
+            System.out.println("2. Electrónica");
+            System.out.println("3. Ropa y accesorios");
+            System.out.println("4. Alimentos y bebidas");
+            System.out.println("5. Papelería");
+            System.out.println("6. Deportes");
+            System.out.println("7. Productos de belleza y cuidado personal");
+            System.out.println("8. Juguetes");
+            System.out.println("9. Videojuegos");
+            System.out.print("Seleccione la categoría del producto (1-9): ");
+            categoria = scanner.nextInt();
+            scanner.nextLine();
+            if (categoria >= 1 && categoria <= 9) {
+                // Todo bien, salir del bucle
+                break;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione una categoría del 1 al 9.");
+            }
+        } while (true); // El bucle se repetirá hasta que se seleccione una categoría válida
+
+
+        // Inicializar el contador de veces comprado en 0
+        int vecesComprado = 0;
+
+        // Agregar el producto al catálogo
+        boolean productoAgregado = controlador.agregarProducto(nombre, descripcion, precio,
+                cantidadDisponible, categoria, vecesComprado);
+
+        if (productoAgregado) {
+            System.out.println("El producto se ha agregado al catálogo exitosamente.");
+        } else {
+            System.out.println("Ha ocurrido un error al agregar el producto al catálogo. Por favor, inténtelo de nuevo.");
         }
     }
 }
