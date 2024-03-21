@@ -85,6 +85,9 @@ public class ListaEnlazada<T> implements Iterable<T> {
         return new ListaEnlazadaIterator();
     }
 
+    //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+
+
     private class ListaEnlazadaIterator implements Iterator<T> {
         private Nodo<T> actual;
 
@@ -104,6 +107,8 @@ public class ListaEnlazada<T> implements Iterable<T> {
             return elemento;
         }
     }
+
+    //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
 
     public Object[] toArray() {
         // Contar la cantidad de elementos en la lista
@@ -126,6 +131,10 @@ public class ListaEnlazada<T> implements Iterable<T> {
         }
 
         return array;
+    }
+
+    public boolean isEmpty() {
+        return cabeza == null;
     }
 
     public Nodo<T> getCabeza() {

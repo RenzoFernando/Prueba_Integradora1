@@ -1,10 +1,10 @@
 [
   {
-    "nombre": "holi",
-    "descripcion": "hello",
-    "precio": 12.0,
+    "nombre": "hola",
+    "descripcion": "holi",
+    "precio": 2.0,
     "cantidadDisponible": 2,
-    "categoria": "BOOKS",
+    "categoria": "ELECTRONICS",
     "vecesComprado": 0
   }
 ]
