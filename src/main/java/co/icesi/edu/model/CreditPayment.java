@@ -7,7 +7,7 @@ public class CreditPayment extends TarjetaPago {
     private int installments;
 
     public CreditPayment(String cardNumber, String securityCodeCVV, int installments) {
-        super(PaymentType.CREDIT);
+        super(1);
         this.cardNumber = cardNumber;
         this.securityCodeCVV = securityCodeCVV;
         this.installments = installments;

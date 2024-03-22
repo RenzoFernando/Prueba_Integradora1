@@ -116,21 +116,22 @@ public class Main {
     //----------------------------------------------------------------//
 
     private static void menuUsuario() {
-        System.out.println("Bienvenido a Tienda Libre");
-        System.out.println("1. Ver catálogo de productos");
-        System.out.println("2. Buscar producto");
-        System.out.println("3. Ver carrito de compras"); //print
-        System.out.println("4. Realizar pedido");
-        System.out.println("5. Ver historial de pedidos"); //json que guarde y filtre por nombre?
-        System.out.println("6. Configuración de cuenta");  //ñao
-        System.out.println("7. Cerrar sesión");
+        System.out.println("Bienvenido " + controlador.nombreUsuarioActual() + " a Tienda Libre");
+        System.out.println("1. Ver catálogo de productos");     //ya
+        System.out.println("2. Buscar producto");                                                             //santiago
+        System.out.println("3. Ver carrito de compras");                                                                //print
+        System.out.println("4. Realizar pedido");                                                                       //pagar y elimnar
+        System.out.println("5. Ver historial de pedidos");                                                              //json que guarde y filtre por nombre?
+        System.out.println("6. Añadir metodo de pago");      //ya
+        System.out.println("7. Cerrar sesión");                 //ya
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
 
         switch (opcion) {
             case 1:
-                // Implementar método para ver catálogo de productos
+                catalogoProductos();
+                menuUsuario();
                 break;
             case 2:
                 // Implementar método para buscar producto
@@ -139,13 +140,22 @@ public class Main {
                 // Implementar método para ver carrito de compras
                 break;
             case 4:
-                // Implementar método para realizar pedido
+                if (!controlador.tieneTarjeta()) {
+                    System.out.println("Por favor añada por lo menos un metodo de pago para poder proceder con el pago del pedido");
+                    menuUsuario();
+                    break;
+                }
+
+                //método para realizar pedido
+                realizarPedido();
+                menuUsuario();
                 break;
             case 5:
                 // Implementar método para ver historial de pedidos
                 break;
             case 6:
-                // Implementar método para configuración de cuenta
+                agregarMetodoPago();
+                menuUsuario();
                 break;
             case 7:
                 System.out.println("¡Hasta luego!");
@@ -159,14 +169,14 @@ public class Main {
     //----------------------------------------------------------------//
 
     private static void menuAdministrador() {
-        System.out.println("Bienvenido a Tienda Libre (Modo Administrador)");
-        System.out.println("1. Ver catálogo de productos");
-        System.out.println("2. Buscar producto");
-        System.out.println("3. Agregar producto al catálogo"); //YAP
-        System.out.println("4. Eliminar producto del catálogo"); //NO REQUERIMIENTO
-        System.out.println("5. Ver lista de usuarios");
-        System.out.println("6. Ver historial de pedidos"); //si archovo json
-        System.out.println("7. Cerrar sesión");
+        System.out.println("Bienvenido " + controlador.nombreUsuarioActual() +" a Tienda Libre (Modo Administrador)");
+        System.out.println("1. Ver catálogo de productos");                          //ya
+        System.out.println("2. Buscar producto");                                                             //santiago
+        System.out.println("3. Agregar producto al catálogo");                       //ya
+        System.out.println("4. Eliminar producto del catálogo");                                                        //pendiente
+        System.out.println("5. Ver lista de usuarios");                                                                 //pendiente
+        System.out.println("6. Ver historial de pedidos");                                                              //hacer archovo json
+        System.out.println("7. Cerrar sesión");                                      //ya
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
@@ -257,5 +267,120 @@ public class Main {
         } else {
             System.out.println("Ha ocurrido un error al agregar el producto al catálogo. Por favor, inténtelo de nuevo.");
         }
+    }
+
+    //----------------------------------------------------------------//
+    //VER PRODUCTOS DEL CATALOGO
+    public static void catalogoProductos() {
+        System.out.println(controlador.obtenerProductoActual());
+        boolean continuar = true;
+        while (continuar) {
+            // Mostrar opciones
+            System.out.println("\nOpciones:");
+            System.out.println("1. Ver el siguiente producto");
+            System.out.println("2. Ver el producto anterior");
+            System.out.println("3. Añadir este producto al carrito");
+            System.out.println("4. Salir");
+            int opcion = scanner.nextInt();
+            switch (opcion) {
+                case 1:
+                    System.out.println(controlador.obtenerSiguienteProducto());
+                    break;
+                case 2:
+                    System.out.println(controlador.obtenerProductoAnterior());
+                    break;
+                case 3:
+                    if (controlador.agregarProductoAlCarrito()){
+                        System.out.println("El producto se ha agregado al carrito exitosamente.");
+                    } else {
+                        System.out.println("El producto ya esta en el carrito.");
+                    }
+                    break;
+                case 4:
+                    continuar = false;
+                    System.out.println("Saliendo del catalogo...");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        }
+    }
+
+    //----------------------------------------------------------------//
+    //METODOS DE PAGO
+    private static void agregarMetodoPago() {
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("Actualmente asi estan sus metodos de pago, si desea editar uno ya existente solo selecionelo");
+            System.out.println(controlador.mostrarTarjetas());
+
+            System.out.println("Seleccione el tipo de método de pago a agregar/editar:");
+            System.out.println("1. Tarjeta de crédito");
+            System.out.println("2. Tarjeta de débito");
+            System.out.println("3. PSE");
+            System.out.println();
+            System.out.println("0. Salir");
+            int opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    agregarTarjetaCredito(1);
+                    break;
+                case 2:
+                    agregarTarjetaDebito(2);
+                    break;
+                case 3:
+                    agregarPSE(3);
+                    break;
+                case 0:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        }
+    }
+
+    private static void agregarTarjetaCredito(int i) {
+        // Solicitar detalles de la tarjeta de crédito al usuario
+        System.out.println("Ingrese el número de tarjeta de crédito:");
+        String cardNumber = scanner.next();
+        System.out.println("Ingrese el código de seguridad CVV:");
+        String securityCodeCVV = scanner.next();
+        System.out.println("Ingrese el número de cuotas:");
+        int installments = scanner.nextInt();
+        controlador.addMetodoPago(i, cardNumber, securityCodeCVV, installments);
+    }
+
+    private static void agregarTarjetaDebito(int i) {
+        // Solicitar detalles de la tarjeta de débito al usuario
+        System.out.println("Ingrese el número de tarjeta de débito:");
+        String cardNumber = scanner.next();
+        System.out.println("Ingrese el código de seguridad CVV:");
+        String securityCodeCVV = scanner.next();
+
+        controlador.addMetodoPago(i, cardNumber, securityCodeCVV);
+    }
+
+    private static void agregarPSE(int i) {
+        // Solicitar detalles de PSE al usuario
+        System.out.println("Ingrese el nombre del banco:");
+        String bankName = scanner.next();
+
+        controlador.addMetodoPago(i, bankName);
+    }
+
+    public static void realizarPedido() {
+        System.out.println(controlador.mostrarTarjetas());
+        System.out.println("Seleccione el numero del tipo de método de pago a pagar el pedido:");
+        System.out.print("    >");
+        int opcion = scanner.nextInt();
+        if (opcion >= 1 && opcion <= 3) {
+            controlador.hacerPedido(opcion);
+            System.out.println("El pedido se ha realizado exitosamente. Puede revisarlo en su historial de pedidos");
+        } else {
+            System.out.println("Opción no válida.");
+        }
+
     }
 }

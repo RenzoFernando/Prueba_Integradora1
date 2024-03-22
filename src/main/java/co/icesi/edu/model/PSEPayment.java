@@ -2,16 +2,15 @@ package co.icesi.edu.model;
 
 public class PSEPayment extends TarjetaPago {
     private String bankName;
-    private String phoneNumber;
 
-    public PSEPayment(String bankName, String phoneNumber) {
-        super(PaymentType.PSE);
+
+    public PSEPayment(String bankName) {
+        super(3);
         this.bankName = bankName;
-        this.phoneNumber = phoneNumber;
     }
 
     @Override
     public String toString() {
-        return "PSE Payment: Bank Name - " + bankName + ", Phone Number - " + phoneNumber;
+        return "PSE Payment: Bank Name - " + bankName;
     }
 }

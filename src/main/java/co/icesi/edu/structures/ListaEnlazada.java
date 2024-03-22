@@ -137,6 +137,17 @@ public class ListaEnlazada<T> implements Iterable<T> {
         return cabeza == null;
     }
 
+    public int size() {
+        int count = 0;
+        Nodo<T> actual = cabeza;
+        while (actual != null) {
+            count++;
+            actual = actual.getSiguiente();
+        }
+        return count;
+    }
+
+
     public Nodo<T> getCabeza() {
         return cabeza;
     }

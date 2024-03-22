@@ -7,7 +7,7 @@ public class DebitPayment extends TarjetaPago {
     private String securityCodeCVV;
 
     public DebitPayment(String cardNumber, String securityCodeCVV) {
-        super(PaymentType.DEBIT);
+        super(2);
         this.cardNumber = cardNumber;
         this.securityCodeCVV = securityCodeCVV;
     }

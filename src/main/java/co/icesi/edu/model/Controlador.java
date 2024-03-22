@@ -5,6 +5,7 @@ package co.icesi.edu.model;
 import co.icesi.edu.structures.ListaEnlazada;
 import co.icesi.edu.structures.Nodo;
 
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,6 +24,10 @@ public class Controlador {
 
     private ListaEnlazada<Usuario> listaUsuarios;
     private ListaEnlazada<Producto> listaProductos;
+    private Usuario usuarioActual;
+
+    private int indiceProductoActual;
+
 
     //----------------------------------------------------------------//
 
@@ -32,6 +37,8 @@ public class Controlador {
         cargarUsuarios();
         this.listaProductos = new ListaEnlazada<>();
         cargarProductos();
+        this.indiceProductoActual = 0;
+        usuarioActual = null;
     }
 
     //----------------------------------------------------------------//
@@ -43,7 +50,8 @@ public class Controlador {
 
             // Configurar Gson para deserializar la lista de usuarios
             Gson gson = new GsonBuilder().create();
-            Type tipoListaUsuarios = new TypeToken<List<Usuario>>(){}.getType();
+            Type tipoListaUsuarios = new TypeToken<List<Usuario>>() {
+            }.getType();
 
             // Deserializar el JSON a una lista de usuarios
             List<Usuario> usuarios = gson.fromJson(reader, tipoListaUsuarios);
@@ -119,6 +127,7 @@ public class Controlador {
     public boolean iniciarSesion(String nombreUsuario, String contrasena) {
         // Buscar el usuario por su nombre de usuario
         Usuario usuario = buscarUsuario(nombreUsuario);
+        usuarioActual = buscarUsuario(nombreUsuario);
 
         // Verificar si se encontró un usuario con ese nombre de usuario
         if (usuario != null) {
@@ -155,6 +164,10 @@ public class Controlador {
             nodoActual = nodoActual.getSiguiente();
         }
         return null; // Usuario no encontrado
+    }
+
+    public String nombreUsuarioActual(){
+        return usuarioActual.getNombreUsuario();
     }
 
     //----------------------------------------------------------------//
@@ -199,7 +212,8 @@ public class Controlador {
 
             // Configurar Gson para deserializar la lista de productos
             Gson gson = new GsonBuilder().create();
-            Type tipoListaProductos = new TypeToken<List<Producto>>(){}.getType();
+            Type tipoListaProductos = new TypeToken<List<Producto>>() {
+            }.getType();
 
             // Deserializar el JSON a una lista de productos
             List<Producto> productos = gson.fromJson(reader, tipoListaProductos);
@@ -236,10 +250,97 @@ public class Controlador {
     }
 
 
-
     //----------------------------------------------------------------//
     //PARA LOS PEDIDOS
 
     //----------------------------------------------------------------//
+    //PARA MOSTRAR CATALOGO DE PRODUCTOS
+    public String obtenerProductoActual() {
+        Nodo<Producto> nodoActual = listaProductos.getCabeza();
+        for (int i = 0; i < indiceProductoActual; i++) {
+            if (nodoActual != null) {
+                nodoActual = nodoActual.getSiguiente();
+            }
+        }
+        if (nodoActual != null) {
+            return "PRODUCTO #" + (indiceProductoActual + 1) + "\n" + nodoActual.getDato().toString();
+        } else {
+            return "No hay productos en el catálogo.";
+        }
+    }
+
+    public String obtenerSiguienteProducto() {
+        if (indiceProductoActual < listaProductos.size() - 1) {
+            indiceProductoActual++;
+        } else {
+            return "No hay productos en el catálogo.";
+        }
+        return obtenerProductoActual();
+    }
+
+    public String obtenerProductoAnterior() {
+        if (indiceProductoActual > 0) {
+            indiceProductoActual--;
+        } else {
+            return "No hay productos en el catálogo.";
+        }
+        return obtenerProductoActual();
+    }
+
+
+    public boolean agregarProductoAlCarrito() {
+        // Obtener el producto actual del catálogo
+        Nodo<Producto> nodoActual = listaProductos.getCabeza();
+        for (int i = 0; i < indiceProductoActual; i++) {
+            if (nodoActual != null) {
+                nodoActual = nodoActual.getSiguiente();
+            }
+        }
+
+        // Verificar si se encontró el producto actual
+        if (nodoActual != null) {
+            // Crear una copia del producto actual
+            Producto productoActual = nodoActual.getDato();
+            Producto productoCopia = new Producto(productoActual.getNombre(), productoActual.getDescripcion(),
+                    productoActual.getPrecio(), 1, productoActual.getCategoria().ordinal(),
+                    productoActual.getVecesComprado());
+
+            // Agregar el producto al carrito utilizando el método addPedido de la clase Pedido
+            return usuarioActual.addPedido(productoCopia);
+        } else {
+            // No se encontró el producto actual en el catálogo
+            return false;
+        }
+    }
+
+    //----------------------------------------------------------------//
+    //PARA METODOS DE PAGO
+
+
+    public boolean addMetodoPago(int i, String cardNumber, String securityCodeCVV, int installments){
+        return usuarioActual.asignarTarjeta(i, cardNumber, securityCodeCVV, installments);
+
+    }
+
+    public boolean addMetodoPago(int i, String cardNumber, String securityCodeCVV) {
+        return usuarioActual.asignarTarjeta(i, cardNumber, securityCodeCVV);
+    }
+
+    public boolean addMetodoPago(int i, String bankName){
+        return usuarioActual.asignarTarjeta(i, bankName);
+    }
+
+    public  String mostrarTarjetas() {
+        return usuarioActual.mostrarTarjetas();
+    }
+
+    public boolean tieneTarjeta() {
+        return usuarioActual.tieneTarjeta();
+    }
+
+    public void hacerPedido(int i) {
+        usuarioActual.hacerPedido(i);
+    }
+
 }
 

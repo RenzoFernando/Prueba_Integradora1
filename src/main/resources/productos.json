@@ -6,5 +6,29 @@
     "cantidadDisponible": 2,
     "categoria": "ELECTRONICS",
     "vecesComprado": 0
+  },
+  {
+    "nombre": "ew",
+    "descripcion": "q",
+    "precio": 234432.0,
+    "cantidadDisponible": 34224,
+    "categoria": "CLOTHES",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "nose",
+    "descripcion": "efef",
+    "precio": 23.0,
+    "cantidadDisponible": 23,
+    "categoria": "STATIONERY",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "mao",
+    "descripcion": "mo",
+    "precio": 23.0,
+    "cantidadDisponible": 22,
+    "categoria": "VIDEOGAMES",
+    "vecesComprado": 0
   }
 ]

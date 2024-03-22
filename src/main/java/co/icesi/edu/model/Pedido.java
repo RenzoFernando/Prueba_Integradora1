@@ -2,6 +2,7 @@ package co.icesi.edu.model;
 
 import co.icesi.edu.structures.ListaEnlazada;
 import java.util.Date;
+import java.util.Calendar;
 
 public class Pedido {
     private String nombreComprador;
@@ -10,15 +11,18 @@ public class Pedido {
     private TarjetaPago metodoPago;
     private Date fechaCompra;
 
-    public Pedido(String nombreComprador, ListaEnlazada<Producto> listaProductos, double precioTotal, TarjetaPago metodoPago, Date fechaCompra) {
+    public Pedido(String nombreComprador) {
         this.nombreComprador = nombreComprador;
-        this.listaPedidos = listaProductos;
-        this.precioTotal = precioTotal;
-        this.metodoPago = metodoPago;
-        this.fechaCompra = fechaCompra;
+        this.listaPedidos = null;
+        this.precioTotal = 0.0;
+        this.metodoPago = null;
+        this.fechaCompra = null;
     }
 
     public boolean addPedido(Producto producto) {
+        if (listaPedidos == null) {
+            listaPedidos = new ListaEnlazada<>();
+        }
         // Verificar si el producto ya está en la lista de pedidos
         if (listaPedidos != null && !listaPedidos.isEmpty()) {
             for (Producto p : listaPedidos) {
@@ -69,13 +73,24 @@ public class Pedido {
         this.metodoPago = metodoPago;
     }
 
-    public Date getFechaCompra() {
-        return fechaCompra;
+
+    public void actualizarFecha(){
+        Calendar cal = Calendar.getInstance();
+        this.fechaCompra = cal.getTime();
     }
 
-    public void setFechaCompra(Date fechaCompra) {
-        this.fechaCompra = fechaCompra;
+    public void calcularTotal() {
+        double total = 0.0;
+        if (listaPedidos != null && !listaPedidos.isEmpty()) {
+            for (Producto producto : listaPedidos) {
+                total += producto.getPrecio();
+            }
+        }
+        precioTotal = total;
+        String x = toString();
+        System.out.println(x);
     }
+
 
     @Override
     public String toString() {
@@ -89,4 +104,6 @@ public class Pedido {
         sb.append('}');
         return sb.toString();
     }
+
+
 }

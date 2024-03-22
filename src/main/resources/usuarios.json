@@ -49,5 +49,26 @@
       null,
       null
     ]
+  },
+  {
+    "nombreUsuario": "a",
+    "contrasena": "a",
+    "nombres": "a",
+    "apellidos": "a",
+    "fechaNacimiento": "1",
+    "direccion": "2",
+    "ciudad": "3",
+    "telefono": "4",
+    "correo": "5",
+    "esAdministrador": false,
+    "tarjetas": [
+      null,
+      null,
+      null
+    ],
+    "pedido": {
+      "nombreComprador": "a",
+      "precioTotal": 0.0
+    }
   }
 ]

@@ -98,4 +98,11 @@ public class Producto {
     }
 
     // Otros métodos de la clase
+
+    @Override
+    public String toString() {
+        return String.format("Nombre: %s\nDescripción: %s\nPrecio: %.2f\nCantidad Disponible: %d\nCategoría: %s\nVeces Comprado: %d\n",
+                nombre, descripcion, precio, cantidadDisponible, categoria.toString(), vecesComprado);
+    }
+
 }
