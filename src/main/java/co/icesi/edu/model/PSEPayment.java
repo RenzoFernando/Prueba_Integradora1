@@ -11,6 +11,6 @@ public class PSEPayment extends TarjetaPago {
 
     @Override
     public String toString() {
-        return "PSE Payment: Bank Name - " + bankName;
+        return super.toString() + "PSE Payment: Bank Name - " + bankName;
     }
 }

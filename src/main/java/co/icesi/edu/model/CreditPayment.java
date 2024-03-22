@@ -15,7 +15,7 @@ public class CreditPayment extends TarjetaPago {
 
     @Override
     public String toString() {
-        return "Credit Payment: Card Number - " + cardNumber + ", CVV - " + securityCodeCVV +
+        return super.toString() + "Credit Payment: Card Number - " + cardNumber + ", CVV - " + securityCodeCVV +
                 ", Installments - " + installments;
     }
 }

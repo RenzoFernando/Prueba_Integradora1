@@ -14,7 +14,9 @@ public class DebitPayment extends TarjetaPago {
 
     @Override
     public String toString() {
-        return "Debit Payment: Card Number - " + cardNumber + ", CVV - " + securityCodeCVV;
+        return super.toString() + "Debit Payment: Card Number - " + cardNumber + ", CVV - " + securityCodeCVV;
     }
+
+
 }
 

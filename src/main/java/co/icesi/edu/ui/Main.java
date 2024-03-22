@@ -123,7 +123,7 @@ public class Main {
         System.out.println("3. Ver carrito de compras");                                                                //print
         System.out.println("4. Realizar pedido");                                                                       //pagar y elimnar
         System.out.println("5. Ver historial de pedidos");                                                              //json que guarde y filtre por nombre?
-        System.out.println("6. Añadir metodo de pago");      //ya
+        System.out.println("6. Añadir metodo de pago");         //ya
         System.out.println("7. Cerrar sesión");                 //ya
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();

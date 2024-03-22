@@ -152,7 +152,6 @@ public class Usuario {
     }
 
 
-
     public void hacerPedido(int i) {
         // Asignar el método de pago al pedido
         pedido.setMetodoPago(tarjetas[i - 1]);

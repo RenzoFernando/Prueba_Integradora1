@@ -1,6 +1,6 @@
 package co.icesi.edu.model;
 
-public abstract class TarjetaPago {
+public class TarjetaPago {
     protected PaymentType paymentType;
 
     protected TarjetaPago(int paymentType) {
@@ -18,6 +18,8 @@ public abstract class TarjetaPago {
     }
 
     // Abstract method
-    public abstract String toString();
+    public String toString() {
+        return "" + "";
+    }
 
 }

@@ -28,15 +28,27 @@
     "correo": "23",
     "esAdministrador": false,
     "tarjetas": [
-      {
-        "cardNumber": "111",
-        "securityCodeCVV": "11",
-        "installments": 1,
-        "paymentType": "CREDIT"
-      },
       null,
+      {
+        "paymentType": "DEBIT"
+      },
       null
-    ]
+    ],
+    "pedido": {
+      "nombreComprador": "w",
+      "listaPedidos": {
+        "cabeza": {
+          "dato": {
+            "nombre": "hola",
+            "descripcion": "holi",
+            "precio": 2.0,
+            "cantidadDisponible": 1,
+            "vecesComprado": 0
+          }
+        }
+      },
+      "precioTotal": 0.0
+    }
   },
   {
     "nombreUsuario": "e",
@@ -71,5 +83,26 @@
       null,
       null
     ]
+  },
+  {
+    "nombreUsuario": "F",
+    "contrasena": "F",
+    "nombres": "F",
+    "apellidos": "F",
+    "fechaNacimiento": "F",
+    "direccion": "F",
+    "ciudad": "F",
+    "telefono": "F",
+    "correo": "F",
+    "esAdministrador": false,
+    "tarjetas": [
+      null,
+      null,
+      null
+    ],
+    "pedido": {
+      "nombreComprador": "F",
+      "precioTotal": 0.0
+    }
   }
 ]
