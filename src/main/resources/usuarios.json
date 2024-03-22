@@ -28,7 +28,12 @@
     "correo": "23",
     "esAdministrador": false,
     "tarjetas": [
-      null,
+      {
+        "cardNumber": "111",
+        "securityCodeCVV": "11",
+        "installments": 1,
+        "paymentType": "CREDIT"
+      },
       null,
       null
     ]
@@ -65,10 +70,6 @@
       null,
       null,
       null
-    ],
-    "pedido": {
-      "nombreComprador": "a",
-      "precioTotal": 0.0
-    }
+    ]
   }
 ]

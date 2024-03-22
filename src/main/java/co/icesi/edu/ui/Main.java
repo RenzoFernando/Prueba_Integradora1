@@ -31,6 +31,7 @@ public class Main {
                     break;
                 case 3:
                     salir = true;
+                    controlador.guardarUsuarios();
                     System.out.println("¡Hasta luego!");
                     break;
                 default:

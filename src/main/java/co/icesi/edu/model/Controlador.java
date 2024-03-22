@@ -69,7 +69,7 @@ public class Controlador {
     }
 
 
-    private void guardarUsuarios() {
+    public void guardarUsuarios() {
         try {
             // Configurar Gson para serializar la lista de usuarios
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
