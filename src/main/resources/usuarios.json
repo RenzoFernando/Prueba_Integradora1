@@ -1,9 +1,33 @@
 [
   {
-    "nombreUsuario": "q",
-    "contrasena": "q",
-    "nombres": "q",
-    "apellidos": "q",
+    "nombreUsuario": "l",
+    "contrasena": "l",
+    "nombres": "l",
+    "apellidos": "l",
+    "fechaNacimiento": "1",
+    "direccion": "1",
+    "ciudad": "1",
+    "telefono": "1",
+    "correo": "1",
+    "esAdministrador": false,
+    "tarjetas": [
+      null,
+      null,
+      {
+        "paymentType": "PSE",
+        "resumen": "PSE Payment: Bank Name - bancolombia"
+      }
+    ],
+    "pedido": {
+      "nombreComprador": "l",
+      "precioTotal": 0.0
+    }
+  },
+  {
+    "nombreUsuario": "s",
+    "contrasena": "s",
+    "nombres": "s",
+    "apellidos": "s",
     "fechaNacimiento": "1",
     "direccion": "1",
     "ciudad": "1",
@@ -14,94 +38,33 @@
       null,
       null,
       null
-    ]
-  },
-  {
-    "nombreUsuario": "w",
-    "contrasena": "w",
-    "nombres": "w",
-    "apellidos": "w",
-    "fechaNacimiento": "23",
-    "direccion": "23",
-    "ciudad": "23",
-    "telefono": "23",
-    "correo": "23",
-    "esAdministrador": false,
-    "tarjetas": [
-      null,
-      {
-        "paymentType": "DEBIT"
-      },
-      null
     ],
     "pedido": {
-      "nombreComprador": "w",
-      "listaPedidos": {
-        "cabeza": {
-          "dato": {
-            "nombre": "hola",
-            "descripcion": "holi",
-            "precio": 2.0,
-            "cantidadDisponible": 1,
-            "vecesComprado": 0
-          }
-        }
-      },
+      "nombreComprador": "s",
       "precioTotal": 0.0
     }
   },
   {
-    "nombreUsuario": "e",
-    "contrasena": "e",
-    "nombres": "e",
-    "apellidos": "e",
-    "fechaNacimiento": "123",
-    "direccion": "123",
-    "ciudad": "123",
-    "telefono": "123",
-    "correo": "123",
-    "esAdministrador": true,
-    "tarjetas": [
-      null,
-      null,
-      null
-    ]
-  },
-  {
-    "nombreUsuario": "a",
-    "contrasena": "a",
-    "nombres": "a",
-    "apellidos": "a",
-    "fechaNacimiento": "1",
-    "direccion": "2",
-    "ciudad": "3",
-    "telefono": "4",
-    "correo": "5",
+    "nombreUsuario": "r",
+    "contrasena": "r",
+    "nombres": "r",
+    "apellidos": "r",
+    "fechaNacimiento": "r",
+    "direccion": "r",
+    "ciudad": "r",
+    "telefono": "r",
+    "correo": "r",
     "esAdministrador": false,
     "tarjetas": [
       null,
       null,
-      null
-    ]
-  },
-  {
-    "nombreUsuario": "F",
-    "contrasena": "F",
-    "nombres": "F",
-    "apellidos": "F",
-    "fechaNacimiento": "F",
-    "direccion": "F",
-    "ciudad": "F",
-    "telefono": "F",
-    "correo": "F",
-    "esAdministrador": false,
-    "tarjetas": [
-      null,
-      null,
-      null
+      {
+        "paymentType": "PSE",
+        "resumen": "PSE Payment: Bank Name - wee"
+      }
     ],
     "pedido": {
-      "nombreComprador": "F",
+      "nombreComprador": "r",
       "precioTotal": 0.0
     }
   }

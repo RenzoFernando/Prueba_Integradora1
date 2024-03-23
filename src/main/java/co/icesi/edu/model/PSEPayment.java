@@ -7,10 +7,11 @@ public class PSEPayment extends TarjetaPago {
     public PSEPayment(String bankName) {
         super(3);
         this.bankName = bankName;
+        super.resumen = toString();
     }
 
     @Override
     public String toString() {
-        return super.toString() + "PSE Payment: Bank Name - " + bankName;
+        return "PSE Payment: Bank Name - " + bankName;
     }
 }

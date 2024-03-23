@@ -117,11 +117,12 @@ public class Main {
     //----------------------------------------------------------------//
 
     private static void menuUsuario() {
+        controlador.guardarUsuarios();
         System.out.println("Bienvenido " + controlador.nombreUsuarioActual() + " a Tienda Libre");
         System.out.println("1. Ver catálogo de productos");     //ya
         System.out.println("2. Buscar producto");                                                             //santiago
-        System.out.println("3. Ver carrito de compras");                                                                //print
-        System.out.println("4. Realizar pedido");                                                                       //pagar y elimnar
+        System.out.println("3. Ver carrito de compras");        //ya                                                        //print
+        System.out.println("4. Realizar pedido");                           //masomenos - editar cantidad                                                           //pagar y elimnar
         System.out.println("5. Ver historial de pedidos");                                                              //json que guarde y filtre por nombre?
         System.out.println("6. Añadir metodo de pago");         //ya
         System.out.println("7. Cerrar sesión");                 //ya
@@ -135,10 +136,12 @@ public class Main {
                 menuUsuario();
                 break;
             case 2:
-                // Implementar método para buscar producto
+                //metodos de busqueda
+                menuUsuario();
                 break;
             case 3:
-                // Implementar método para ver carrito de compras
+                verCarrito();
+                menuUsuario();
                 break;
             case 4:
                 if (!controlador.tieneTarjeta()) {
@@ -146,13 +149,13 @@ public class Main {
                     menuUsuario();
                     break;
                 }
-
                 //método para realizar pedido
                 realizarPedido();
                 menuUsuario();
                 break;
             case 5:
                 // Implementar método para ver historial de pedidos
+                menuUsuario();
                 break;
             case 6:
                 agregarMetodoPago();
@@ -185,9 +188,11 @@ public class Main {
         switch (opcion) {
             case 1:
                 // Implementar método para ver catálogo de productos
+                menuAdministrador();
                 break;
             case 2:
                 // Implementar método para buscar producto
+                menuAdministrador();
                 break;
             case 3:
                 agregarProductoCatalogo();
@@ -195,12 +200,15 @@ public class Main {
                 break;
             case 4:
                 // Implementar método para eliminar producto del catálogo
+                menuAdministrador();
                 break;
             case 5:
                 // Implementar método para ver lista de usuarios
+                menuAdministrador();
                 break;
             case 6:
                 // Implementar método para ver historial de pedidos
+                menuAdministrador();
                 break;
             case 7:
                 System.out.println("¡Hasta luego!");
@@ -383,5 +391,9 @@ public class Main {
             System.out.println("Opción no válida.");
         }
 
+    }
+
+    public static void verCarrito() {
+        System.out.println(controlador.carritoActual());
     }
 }

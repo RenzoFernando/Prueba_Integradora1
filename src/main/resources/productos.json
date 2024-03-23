@@ -1,34 +1,18 @@
 [
   {
-    "nombre": "hola",
-    "descripcion": "holi",
-    "precio": 2.0,
-    "cantidadDisponible": 2,
-    "categoria": "ELECTRONICS",
+    "nombre": "Crema bebe",
+    "descripcion": "queli",
+    "precio": 30000.0,
+    "cantidadDisponible": 20,
+    "categoria": "BEAUTY",
     "vecesComprado": 0
   },
   {
-    "nombre": "ew",
-    "descripcion": "q",
-    "precio": 234432.0,
-    "cantidadDisponible": 34224,
+    "nombre": "reloj",
+    "descripcion": "marca la hora",
+    "precio": 500000.0,
+    "cantidadDisponible": 4,
     "categoria": "CLOTHES",
-    "vecesComprado": 0
-  },
-  {
-    "nombre": "nose",
-    "descripcion": "efef",
-    "precio": 23.0,
-    "cantidadDisponible": 23,
-    "categoria": "STATIONERY",
-    "vecesComprado": 0
-  },
-  {
-    "nombre": "mao",
-    "descripcion": "mo",
-    "precio": 23.0,
-    "cantidadDisponible": 22,
-    "categoria": "VIDEOGAMES",
     "vecesComprado": 0
   }
 ]

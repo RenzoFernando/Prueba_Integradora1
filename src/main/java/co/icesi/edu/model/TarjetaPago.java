@@ -2,6 +2,7 @@ package co.icesi.edu.model;
 
 public class TarjetaPago {
     protected PaymentType paymentType;
+    protected String resumen;
 
     protected TarjetaPago(int paymentType) {
         switch (paymentType) {
@@ -15,11 +16,9 @@ public class TarjetaPago {
                 this.paymentType = PaymentType.PSE;
                 break;
         }
+
     }
 
-    // Abstract method
-    public String toString() {
-        return "" + "";
-    }
+
 
 }

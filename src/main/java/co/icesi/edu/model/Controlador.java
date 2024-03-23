@@ -24,8 +24,8 @@ public class Controlador {
 
     private ListaEnlazada<Usuario> listaUsuarios;
     private ListaEnlazada<Producto> listaProductos;
+    private ListaEnlazada<Pedido> listaPedidos;
     private Usuario usuarioActual;
-
     private int indiceProductoActual;
 
 
@@ -37,9 +37,68 @@ public class Controlador {
         cargarUsuarios();
         this.listaProductos = new ListaEnlazada<>();
         cargarProductos();
+        this.listaPedidos = new ListaEnlazada<>();
+        cargarPedidos();
+
         this.indiceProductoActual = 0;
         usuarioActual = null;
     }
+
+
+    //----------------------------------------------------------------//
+    //PARA LOS PEDIDOS
+
+    private void cargarPedidos() {
+        try {
+            // Leer el archivo JSON de usuarios
+            FileReader reader = new FileReader("src/main/resources/facturaPedidos.json");
+
+            // Configurar Gson para deserializar la lista de usuarios
+            Gson gson = new GsonBuilder().create();
+            Type tipoListPedidos = new TypeToken<List<Pedido>>() {
+            }.getType();
+
+            // Deserializar el JSON a una lista de usuarios
+            List<Pedido> pedidos = gson.fromJson(reader, tipoListPedidos);
+
+            // Agregar los usuarios a la lista enlazada
+            if (pedidos != null) {
+                for (Pedido pedido : pedidos) {
+                    listaPedidos.agregar(pedido);
+                }
+            }
+
+            // Cerrar el lector
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void guardarPedidos(Pedido obj) {
+        listaPedidos.agregar(obj);
+
+        try {
+            // Configurar Gson para serializar la lista de usuarios
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            // Convertir la lista enlazada de usuarios a JSON
+            String jsonPedidos = gson.toJson(listaPedidos.toArray());
+
+            // Escribir el JSON en un archivo
+            FileWriter writer = new FileWriter("src/main/resources/facturaPedidos.json");
+            writer.write(jsonPedidos);
+
+            // Cerrar el escritor
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     //----------------------------------------------------------------//
     //PARA LOS USUARIOS
@@ -57,8 +116,11 @@ public class Controlador {
             List<Usuario> usuarios = gson.fromJson(reader, tipoListaUsuarios);
 
             // Agregar los usuarios a la lista enlazada
-            for (Usuario usuario : usuarios) {
-                listaUsuarios.agregar(usuario);
+            if (usuarios != null) {
+                // Si la lista no es null, agregar los usuarios a la lista enlazada
+                for (Usuario usuario : usuarios) {
+                    listaUsuarios.agregar(usuario);
+                }
             }
 
             // Cerrar el lector
@@ -219,8 +281,10 @@ public class Controlador {
             List<Producto> productos = gson.fromJson(reader, tipoListaProductos);
 
             // Agregar los productos a la lista enlazada
-            for (Producto producto : productos) {
-                listaProductos.agregar(producto);
+            if (productos != null) {
+                for (Producto producto : productos) {
+                    listaProductos.agregar(producto);
+                }
             }
 
             // Cerrar el lector
@@ -250,8 +314,6 @@ public class Controlador {
     }
 
 
-    //----------------------------------------------------------------//
-    //PARA LOS PEDIDOS
 
     //----------------------------------------------------------------//
     //PARA MOSTRAR CATALOGO DE PRODUCTOS
@@ -338,8 +400,18 @@ public class Controlador {
         return usuarioActual.tieneTarjeta();
     }
 
+    //----------------------------------------------------------------//
+    //PARA CANCELAR EL PEDIDO
+
     public void hacerPedido(int i) {
-        usuarioActual.hacerPedido(i);
+        Pedido obj = usuarioActual.facturaPedido(i);
+        guardarPedidos(obj);
+        usuarioActual.borrarPedidoAnterior();
+
+    }
+
+    public String carritoActual(){
+        return usuarioActual.carritoActual();
     }
 
 }

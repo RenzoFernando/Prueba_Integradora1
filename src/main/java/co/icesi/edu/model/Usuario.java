@@ -1,9 +1,5 @@
 package co.icesi.edu.model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Usuario {
     private String nombreUsuario;
@@ -83,9 +79,10 @@ public class Usuario {
         StringBuilder estadoTarjetas = new StringBuilder();
         for (int i = 0; i < tarjetas.length; i++) {
             if (tarjetas[i] != null) {
-                estadoTarjetas.append("Tarjeta ").append(i + 1).append(": ").append(tarjetas[i]).append("\n");
+                String x = tarjetas[i].resumen;
+                estadoTarjetas.append("Metodo de Pago ").append(i + 1).append(": ").append(x).append("\n");
             } else {
-                estadoTarjetas.append("Tarjeta ").append(i + 1).append(": null\n");
+                estadoTarjetas.append("Metodo de Pago ").append(i + 1).append(": null\n");
             }
         }
         return estadoTarjetas.toString();
@@ -152,7 +149,7 @@ public class Usuario {
     }
 
 
-    public void hacerPedido(int i) {
+    public Pedido facturaPedido(int i) {
         // Asignar el método de pago al pedido
         pedido.setMetodoPago(tarjetas[i - 1]);
 
@@ -162,21 +159,16 @@ public class Usuario {
         // Calcular el total del pedido
         pedido.calcularTotal();
 
-        // Convertir el pedido a formato JSON
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String jsonPedido = gson.toJson(pedido);
+        return pedido = new Pedido(nombreUsuario);
+    }
 
-        // Guardar el JSON en un archivo
-        try {
-            FileWriter writer = new FileWriter("src/main/resources/pedido.json");
-            writer.write(jsonPedido);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String carritoActual() {
+        return pedido.obtenerDetalleProductos();
+    }
 
-        // Establecer la relación del usuario con el pedido como nula
+    public void borrarPedidoAnterior() {
         pedido = null;
+        pedido = new Pedido(nombreUsuario);
     }
 
 }

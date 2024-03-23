@@ -10,11 +10,12 @@ public class DebitPayment extends TarjetaPago {
         super(2);
         this.cardNumber = cardNumber;
         this.securityCodeCVV = securityCodeCVV;
+        super.resumen= toString();
     }
 
     @Override
     public String toString() {
-        return super.toString() + "Debit Payment: Card Number - " + cardNumber + ", CVV - " + securityCodeCVV;
+        return "Debit Payment: Card Number - " + cardNumber + ", CVV - " + securityCodeCVV;
     }
 
 

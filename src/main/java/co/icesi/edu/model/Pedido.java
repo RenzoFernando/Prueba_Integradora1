@@ -74,7 +74,7 @@ public class Pedido {
     }
 
 
-    public void actualizarFecha(){
+    public void actualizarFecha() {
         Calendar cal = Calendar.getInstance();
         this.fechaCompra = cal.getTime();
     }
@@ -87,22 +87,34 @@ public class Pedido {
             }
         }
         precioTotal = total;
-        String x = toString();
-        System.out.println(x);
     }
 
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Pedido{");
-        sb.append("nombreComprador='").append(nombreComprador).append('\'');
-        sb.append(", listaProductos=").append(listaPedidos);
-        sb.append(", precioTotal=").append(precioTotal);
-        sb.append(", metodoPago=").append(metodoPago);
-        sb.append(", fechaCompra=").append(fechaCompra);
-        sb.append('}');
-        return sb.toString();
+        return  "Información de la compra:\n" +
+                "Comprador: " + nombreComprador + "\n" +
+                "Pedidos: " + listaPedidos + "\n" +
+                "Precio Total: " + precioTotal + "\n" +
+                "Método de Pago: " +
+                "Fecha de Compra: " + fechaCompra;
+    }
+
+    public String obtenerDetalleProductos() {
+        StringBuilder detalleProductos = new StringBuilder();
+        double total = 0.0;
+
+        if (listaPedidos != null && !listaPedidos.isEmpty()) {
+            for (Producto producto : listaPedidos) {
+                detalleProductos.append("Producto: ").append(producto.getNombre())
+                        .append(", Precio: ").append(producto.getPrecio()).append("\n");
+                total += producto.getPrecio();
+            }
+        }
+
+        detalleProductos.append("Total: ").append(total);
+
+        return detalleProductos.toString();
     }
 
 
