@@ -1,98 +1,32 @@
 [
   {
     "nombreComprador": "r",
-    "listaPedidos": {
-      "cabeza": {
-        "dato": {
-          "nombre": "reloj",
-          "descripcion": "marca la hora",
-          "precio": 500000.0,
-          "cantidadDisponible": 1,
-          "categoria": "BOOKS",
-          "vecesComprado": 0
-        }
-      }
-    },
-    "precioTotal": 500000.0,
-    "metodoPago": {
-      "paymentType": "CREDIT",
-      "resumen": "Credit Payment: Card Number - 123456789, CVV - 455, Installments - 2"
-    },
-    "fechaCompra": "Mar 22, 2024, 11:17:38 PM"
-  },
-  {
-    "nombreComprador": "l",
-    "listaPedidos": {
-      "cabeza": {
-        "dato": {
-          "nombre": "Crema bebe",
-          "descripcion": "queli",
-          "precio": 30000.0,
-          "cantidadDisponible": 1,
-          "categoria": "STATIONERY",
-          "vecesComprado": 0
-        }
-      }
-    },
-    "precioTotal": 30000.0,
+    "listaPedidos": {},
+    "precioTotal": 0.0,
     "metodoPago": {
       "paymentType": "PSE",
-      "resumen": "PSE Payment: Bank Name - bancolombia"
+      "resumen": "PSE Payment: Bank Name - wee"
     },
-    "fechaCompra": "Mar 22, 2024, 11:19:11 PM"
+    "fechaCompra": "Mar 23, 2024, 6:23:07 PM"
   },
   {
     "nombreComprador": "r",
     "listaPedidos": {
       "cabeza": {
         "dato": {
-          "nombre": "Crema bebe",
-          "descripcion": "queli",
-          "precio": 30000.0,
+          "nombre": "Teléfono inteligente",
+          "descripcion": "tecnología de vanguardia en tus manos",
+          "precio": 900000.0,
           "cantidadDisponible": 1,
-          "categoria": "STATIONERY",
           "vecesComprado": 0
         }
       }
     },
-    "precioTotal": 30000.0,
-    "metodoPago": {
-      "paymentType": "CREDIT",
-      "resumen": "Credit Payment: Card Number - 123456789, CVV - 455, Installments - 2"
-    },
-    "fechaCompra": "Mar 22, 2024, 11:20:17 PM"
-  },
-  {
-    "nombreComprador": "l",
-    "listaPedidos": {
-      "cabeza": {
-        "dato": {
-          "nombre": "Crema bebe",
-          "descripcion": "queli",
-          "precio": 30000.0,
-          "cantidadDisponible": 1,
-          "categoria": "STATIONERY",
-          "vecesComprado": 0
-        }
-      }
-    },
-    "precioTotal": 30000.0,
+    "precioTotal": 900000.0,
     "metodoPago": {
       "paymentType": "PSE",
-      "resumen": "PSE Payment: Bank Name - bancolombia"
+      "resumen": "PSE Payment: Bank Name - wee"
     },
-    "fechaCompra": "Mar 22, 2024, 11:56:23 PM"
-  },
-  {
-    "nombreComprador": "l",
-    "precioTotal": 0.0
-  },
-  {
-    "nombreComprador": "r",
-    "precioTotal": 0.0
-  },
-  {
-    "nombreComprador": "r",
-    "precioTotal": 0.0
+    "fechaCompra": "Mar 23, 2024, 6:23:32 PM"
   }
 ]

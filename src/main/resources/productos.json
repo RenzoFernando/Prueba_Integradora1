@@ -1,18 +1,162 @@
 [
   {
-    "nombre": "Crema bebe",
-    "descripcion": "queli",
-    "precio": 30000.0,
+    "nombre": "Chaqueta de cuero",
+    "descripcion": "estilo y durabilidad en una sola prenda",
+    "precio": 180000.0,
+    "cantidadDisponible": 0,
+    "categoria": "CLOTHES",
+    "vecesComprado": 8
+  },
+  {
+    "nombre": "Celular",
+    "descripcion": "tecnología de vanguardia en tus manos",
+    "precio": 900000.0,
+    "cantidadDisponible": 7,
+    "categoria": "ELECTRONICS",
+    "vecesComprado": 1
+  },
+  {
+    "nombre": "Libro de cocina vegana",
+    "descripcion": "recetas saludables y deliciosas sin productos de origen animal",
+    "precio": 40000.0,
+    "cantidadDisponible": 10,
+    "categoria": "BOOKS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Balón de baloncesto",
+    "descripcion": "ideal para practicar tiros y dribles",
+    "precio": 45000.0,
+    "cantidadDisponible": 15,
+    "categoria": "SPORTS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Set de lápices de colores",
+    "descripcion": "para dar vida a tus dibujos y proyectos",
+    "precio": 20000.0,
     "cantidadDisponible": 20,
+    "categoria": "STATIONERY",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Videojuego de aventuras",
+    "descripcion": "explora mundos fantásticos y vive emocionantes aventuras",
+    "precio": 60000.0,
+    "cantidadDisponible": 5,
+    "categoria": "VIDEOGAMES",
+    "vecesComprado": 6
+  },
+  {
+    "nombre": "Crema hidratante facial",
+    "descripcion": "nutrición y cuidado para tu piel",
+    "precio": 35000.0,
+    "cantidadDisponible": 12,
     "categoria": "BEAUTY",
     "vecesComprado": 0
   },
   {
-    "nombre": "reloj",
-    "descripcion": "marca la hora",
-    "precio": 500000.0,
-    "cantidadDisponible": 4,
+    "nombre": "Pelota de fútbol",
+    "descripcion": "resistente y duradera",
+    "precio": 40000.0,
+    "cantidadDisponible": 10,
+    "categoria": "SPORTS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Muñeca articulada",
+    "descripcion": "diversión asegurada para los más pequeños",
+    "precio": 25000.0,
+    "cantidadDisponible": 8,
+    "categoria": "TOYS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Barra de chocolate gourmet",
+    "descripcion": "exquisito sabor en cada bocado",
+    "precio": 15000.0,
+    "cantidadDisponible": 25,
+    "categoria": "FOOD",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Chaqueta de cuero",
+    "descripcion": "estilo y durabilidad en una sola prenda",
+    "precio": 180000.0,
+    "cantidadDisponible": -1,
     "categoria": "CLOTHES",
+    "vecesComprado": 8
+  },
+  {
+    "nombre": "Teléfono inteligente",
+    "descripcion": "tecnología de vanguardia en tus manos",
+    "precio": 900000.0,
+    "cantidadDisponible": 7,
+    "categoria": "ELECTRONICS",
+    "vecesComprado": 1
+  },
+  {
+    "nombre": "Libro de cocina vegana",
+    "descripcion": "recetas saludables y deliciosas sin productos de origen animal",
+    "precio": 40000.0,
+    "cantidadDisponible": 10,
+    "categoria": "BOOKS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Balón de baloncesto",
+    "descripcion": "ideal para practicar tiros y dribles",
+    "precio": 45000.0,
+    "cantidadDisponible": 15,
+    "categoria": "SPORTS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Set de lápices de colores",
+    "descripcion": "para dar vida a tus dibujos y proyectos",
+    "precio": 20000.0,
+    "cantidadDisponible": 20,
+    "categoria": "STATIONERY",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Videojuego de aventuras",
+    "descripcion": "explora mundos fantásticos y vive emocionantes aventuras",
+    "precio": 60000.0,
+    "cantidadDisponible": 5,
+    "categoria": "VIDEOGAMES",
+    "vecesComprado": 6
+  },
+  {
+    "nombre": "Crema hidratante facial",
+    "descripcion": "nutrición y cuidado para tu piel",
+    "precio": 35000.0,
+    "cantidadDisponible": 12,
+    "categoria": "BEAUTY",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Pelota de fútbol",
+    "descripcion": "resistente y duradera",
+    "precio": 40000.0,
+    "cantidadDisponible": 10,
+    "categoria": "SPORTS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Muñeca articulada",
+    "descripcion": "diversión asegurada para los más pequeños",
+    "precio": 25000.0,
+    "cantidadDisponible": 8,
+    "categoria": "TOYS",
+    "vecesComprado": 0
+  },
+  {
+    "nombre": "Barra de chocolate gourmet",
+    "descripcion": "exquisito sabor en cada bocado",
+    "precio": 15000.0,
+    "cantidadDisponible": 25,
+    "categoria": "FOOD",
     "vecesComprado": 0
   }
 ]

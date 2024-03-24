@@ -26,6 +26,8 @@ public class Controlador {
     private ListaEnlazada<Producto> listaProductos;
     private ListaEnlazada<Pedido> listaPedidos;
     private Usuario usuarioActual;
+
+    private Producto productoActual;
     private int indiceProductoActual;
 
 
@@ -42,11 +44,104 @@ public class Controlador {
 
         this.indiceProductoActual = 0;
         usuarioActual = null;
+        productoActual = null;
     }
 
 
     //----------------------------------------------------------------//
+
+    public String listarUsuarios() {
+        String x = "";
+        Nodo<Usuario> nodoActual = listaUsuarios.getCabeza();
+
+        while (nodoActual != null) {
+            Usuario usuario = nodoActual.getDato();
+            x += usuario.getNombreUsuario() + "\n";
+            nodoActual = nodoActual.getSiguiente();
+        }
+
+        return x;
+    }
+
+
+
+    //----------------------------------------------------------------//
+
+    public boolean eliminarProducto(String nombreProducto) {
+        // Verificar si la lista de productos está vacía
+        if (listaProductos.isEmpty()) {
+            System.out.println("La lista de productos está vacía.");
+            return false;
+        }
+
+        Producto p = buscarProducto(nombreProducto);
+
+        // Buscar el producto en la lista
+        Nodo<Producto> nodoProducto = listaProductos.buscar(p);
+        if (nodoProducto != null) {
+            // Eliminar el producto de la lista
+            listaProductos.eliminar(nodoProducto.getDato());
+            System.out.println("Producto '" + nombreProducto + "' eliminado exitosamente.");
+            return true;
+        } else {
+            System.out.println("El producto '" + nombreProducto + "' no se encontró en la lista.");
+            return false;
+        }
+    }
+
+    private Producto buscarProducto(String nombreProducto) {
+        Nodo<Producto> nodoActual = listaProductos.getCabeza();
+        while (nodoActual != null) {
+            Producto productoActual = nodoActual.getDato();
+            if (productoActual.getNombre().equals(nombreProducto)) {
+                return productoActual;
+            }
+            nodoActual = nodoActual.getSiguiente();
+        }
+        return null; // Producto no encontrado
+    }
+
+
+
+
+    //----------------------------------------------------------------//
     //PARA LOS PEDIDOS
+
+    public String mostrarTodosLosPedidos() {
+        StringBuilder resultado = new StringBuilder();
+        boolean algunPedido = false;
+
+        for (Pedido pedido : listaPedidos) {
+            resultado.append(pedido.toString()).append("\n");
+            algunPedido = true;
+        }
+
+        if (!algunPedido) {
+            resultado.append("No hay pedidos registrados.");
+        }
+
+        return resultado.toString();
+    }
+
+
+    public String mostrarPedidosUsuarioActual() {
+        StringBuilder resultado = new StringBuilder();
+        boolean usuarioEncontrado = false;
+
+        for (Pedido pedido : listaPedidos) {
+            if (pedido.getNombreComprador().equals(usuarioActual.getNombreUsuario())) {
+                resultado.append(pedido.toString()).append("\n");
+                usuarioEncontrado = true;
+            }
+        }
+
+        if (!usuarioEncontrado) {
+            resultado.append("No hay pedidos para el usuario actual.");
+        }
+
+        return resultado.toString();
+    }
+
 
     private void cargarPedidos() {
         try {
@@ -95,7 +190,38 @@ public class Controlador {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+
+    public void ajustarCantidades(Pedido obj) {
+        boolean bandera;
+        int x = obj.sizeLista();
+
+        for (int i = 0; i < x; i++) {
+            String nombrePedido = obj.obtenerNombreProducto(i+1);
+
+            for (int j = 0; j < listaProductos.size(); j++) {
+                Producto producto = listaProductos.get(j);
+                String nombreProducto = producto.getNombre();
+
+                if (nombrePedido.equals(nombreProducto)) {
+                    System.out.println(nombrePedido + nombreProducto);
+                    // Obtener la cantidad actual del producto
+                    int cantidadProducto = producto.getCantidadDisponible();
+                    // Obtener la cantidad del pedido
+                    int cantidadPedido = obj.obtenerCantidadProducto(i+1);
+                    if (cantidadPedido !=-1) {
+                        // Calcular la nueva cantidad del producto
+                        int nuevaCantidad = cantidadProducto - cantidadPedido;
+                        // Actualizar la cantidad del producto y esa vaina
+                        producto.setCantidadDisponible(nuevaCantidad);
+                        producto.setVecesComprado(producto.getVecesComprado()+cantidadPedido);
+                    }
+                }
+            }
+        }
+        guardarProductos();
+        cargarProductos();
     }
 
 
@@ -351,24 +477,35 @@ public class Controlador {
 
 
     public boolean agregarProductoAlCarrito() {
-        // Obtener el producto actual del catálogo
-        Nodo<Producto> nodoActual = listaProductos.getCabeza();
+        //Nodo<Producto> nodoActual = listaProductos.getCabeza();
+        /*
         for (int i = 0; i < indiceProductoActual; i++) {
             if (nodoActual != null) {
                 nodoActual = nodoActual.getSiguiente();
             }
         }
+         */
+        // Obtener el producto actual del catálogo
 
         // Verificar si se encontró el producto actual
-        if (nodoActual != null) {
+        Producto producto = listaProductos.get(indiceProductoActual);
+
+        if (listaProductos != null) {
             // Crear una copia del producto actual
-            Producto productoActual = nodoActual.getDato();
+            Producto productoActual = null;
+
+            productoActual = producto;
+            int cantidad = productoActual.getCantidadDisponible();
+            if (cantidad > 0) {
+                cantidad = 1;
+            }
             Producto productoCopia = new Producto(productoActual.getNombre(), productoActual.getDescripcion(),
-                    productoActual.getPrecio(), 1, productoActual.getCategoria().ordinal(),
+                    productoActual.getPrecio(), cantidad, productoActual.getCategoria().ordinal(),
                     productoActual.getVecesComprado());
 
             // Agregar el producto al carrito utilizando el método addPedido de la clase Pedido
             return usuarioActual.addPedido(productoCopia);
+
         } else {
             // No se encontró el producto actual en el catálogo
             return false;
@@ -406,12 +543,35 @@ public class Controlador {
     public void hacerPedido(int i) {
         Pedido obj = usuarioActual.facturaPedido(i);
         guardarPedidos(obj);
+        ajustarCantidades(obj);
         usuarioActual.borrarPedidoAnterior();
+    }
 
+    public void borrardatos() {
+        usuarioActual.borrarPedidoAnterior();
     }
 
     public String carritoActual(){
         return usuarioActual.carritoActual();
+    }
+
+    public boolean editarCantidad(int numeroP, int newCantidad){
+
+        String nameProductoPedido = usuarioActual.nameProduct(numeroP);
+        int actualProducto = 0;
+        for (int i = 0; i < listaProductos.size(); i++) {
+            Producto producto = listaProductos.get(i);
+            if (producto.getNombre().equals(nameProductoPedido)) {
+                actualProducto = i;
+            }
+        }
+
+        Producto producto = listaProductos.get(actualProducto);
+
+        int cantidadReal = producto.getCantidadDisponible();
+
+        return usuarioActual.editarCantidad(numeroP,cantidadReal, newCantidad);
+
     }
 
 }

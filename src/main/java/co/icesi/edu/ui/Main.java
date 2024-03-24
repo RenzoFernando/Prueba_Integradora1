@@ -117,15 +117,15 @@ public class Main {
     //----------------------------------------------------------------//
 
     private static void menuUsuario() {
-        controlador.guardarUsuarios();
+
         System.out.println("Bienvenido " + controlador.nombreUsuarioActual() + " a Tienda Libre");
-        System.out.println("1. Ver catálogo de productos");     //ya
-        System.out.println("2. Buscar producto");                                                             //santiago
-        System.out.println("3. Ver carrito de compras");        //ya                                                        //print
-        System.out.println("4. Realizar pedido");                           //masomenos - editar cantidad                                                           //pagar y elimnar
-        System.out.println("5. Ver historial de pedidos");                                                              //json que guarde y filtre por nombre?
-        System.out.println("6. Añadir metodo de pago");         //ya
-        System.out.println("7. Cerrar sesión");                 //ya
+        System.out.println("1. Ver catálogo de productos");              //ya
+        System.out.println("2. Buscar producto");                                //santiago
+        System.out.println("3. Ver carrito de compras y editar");        //ya
+        System.out.println("4. Realizar pedido");                        //ya
+        System.out.println("5. Ver historial de pedidos");               //ya
+        System.out.println("6. Añadir metodo de pago");                  //ya
+        System.out.println("7. Cerrar sesión");                          //ya
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
@@ -154,14 +154,16 @@ public class Main {
                 menuUsuario();
                 break;
             case 5:
-                // Implementar método para ver historial de pedidos
+                System.out.println(controlador.mostrarPedidosUsuarioActual());
                 menuUsuario();
                 break;
             case 6:
                 agregarMetodoPago();
                 menuUsuario();
+                controlador.guardarUsuarios();
                 break;
             case 7:
+                controlador.borrardatos();
                 System.out.println("¡Hasta luego!");
                 break;
             default:
@@ -175,11 +177,11 @@ public class Main {
     private static void menuAdministrador() {
         System.out.println("Bienvenido " + controlador.nombreUsuarioActual() +" a Tienda Libre (Modo Administrador)");
         System.out.println("1. Ver catálogo de productos");                          //ya
-        System.out.println("2. Buscar producto");                                                             //santiago
+        System.out.println("2. Buscar producto");                                            //santiago
         System.out.println("3. Agregar producto al catálogo");                       //ya
-        System.out.println("4. Eliminar producto del catálogo");                                                        //pendiente
-        System.out.println("5. Ver lista de usuarios");                                                                 //pendiente
-        System.out.println("6. Ver historial de pedidos");                                                              //hacer archovo json
+        System.out.println("4. Eliminar producto del catálogo");                     //yae
+        System.out.println("5. Ver lista de usuarios");                              //ya
+        System.out.println("6. Ver historial de pedidos");                           //ya
         System.out.println("7. Cerrar sesión");                                      //ya
         System.out.print("Seleccione una opción: ");
         int opcion = scanner.nextInt();
@@ -187,7 +189,7 @@ public class Main {
 
         switch (opcion) {
             case 1:
-                // Implementar método para ver catálogo de productos
+                catalogoProductos();
                 menuAdministrador();
                 break;
             case 2:
@@ -199,15 +201,15 @@ public class Main {
                 menuAdministrador();
                 break;
             case 4:
-                // Implementar método para eliminar producto del catálogo
+                eliminarProducto();
                 menuAdministrador();
                 break;
             case 5:
-                // Implementar método para ver lista de usuarios
+                System.out.println(controlador.listarUsuarios());
                 menuAdministrador();
                 break;
             case 6:
-                // Implementar método para ver historial de pedidos
+                System.out.println(controlador.mostrarTodosLosPedidos());
                 menuAdministrador();
                 break;
             case 7:
@@ -284,7 +286,7 @@ public class Main {
         System.out.println(controlador.obtenerProductoActual());
         boolean continuar = true;
         while (continuar) {
-            // Mostrar opciones
+            // Mostrar opciones1
             System.out.println("\nOpciones:");
             System.out.println("1. Ver el siguiente producto");
             System.out.println("2. Ver el producto anterior");
@@ -300,9 +302,9 @@ public class Main {
                     break;
                 case 3:
                     if (controlador.agregarProductoAlCarrito()){
-                        System.out.println("El producto se ha agregado al carrito exitosamente.");
+                        System.out.println("El producto se ha agregado al carrito exitosamente. Si la cantidad de este es 0 no se mostrara");
                     } else {
-                        System.out.println("El producto ya esta en el carrito.");
+                        System.out.println("El producto ya esta en el carrito. Por favor edite la cantidad si asi lo desea");
                     }
                     break;
                 case 4:
@@ -386,7 +388,8 @@ public class Main {
         int opcion = scanner.nextInt();
         if (opcion >= 1 && opcion <= 3) {
             controlador.hacerPedido(opcion);
-            System.out.println("El pedido se ha realizado exitosamente. Puede revisarlo en su historial de pedidos");
+            System.out.println("El pedido se ha realizado exitosamente.");
+            System.out.println("Puede revisarlo en su historial de pedidos");
         } else {
             System.out.println("Opción no válida.");
         }
@@ -395,5 +398,47 @@ public class Main {
 
     public static void verCarrito() {
         System.out.println(controlador.carritoActual());
+
+        boolean editar = false;
+        int opEdit = 0;
+        do {
+            System.out.println("¿Desea editar la cantidad de algun producto?  (1: Sí / 2: No): ");
+            opEdit = scanner.nextInt();
+            if (opEdit == 1) {
+                editar = true;
+            } else if (opEdit == 2) {
+                editar = false;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione 1 o 2.");
+            }
+            scanner.nextLine();
+        } while (opEdit != 1 && opEdit != 2);
+        if (editar) {
+            System.out.println("Ingrese el numero del producto a editar la cantidad:");
+            int prod = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Ingrese la nueva cantidad:");
+            int cantidad = scanner.nextInt();
+            scanner.nextLine();
+            if (controlador.editarCantidad(prod, cantidad)) {
+               System.out.println("Se edito correctamente la cantidad");
+            } else {
+                System.out.println("No se pudo editar la cantidad, verifique la cantidad disponible o si el producto elegido existe en su carrito");
+            }
+
+
+        }
+    }
+
+    public static void eliminarProducto() {
+        System.out.println("Ingrese el nombre del producto que desea eliminar:");
+        String nombreProducto = scanner.nextLine();
+
+        boolean productoEliminado = controlador.eliminarProducto(nombreProducto);
+        if (productoEliminado) {
+            System.out.println("El producto se eliminó correctamente.");
+        } else {
+            System.out.println("No se pudo eliminar el producto. Verifique el nombre ingresado.");
+        }
     }
 }

@@ -20,25 +20,32 @@ public class Pedido {
     }
 
     public boolean addPedido(Producto producto) {
+        boolean result = true;
+
         if (listaPedidos == null) {
             listaPedidos = new ListaEnlazada<>();
         }
         // Verificar si el producto ya está en la lista de pedidos
-        if (listaPedidos != null && !listaPedidos.isEmpty()) {
-            for (Producto p : listaPedidos) {
-                if (p.equals(producto)) {
-                    return false; // Producto duplicado, no se agrega
+        if (!listaPedidos.isEmpty()) {
+            for (int i = 0; i < listaPedidos.size(); i++) {
+                Producto p = listaPedidos.get(i);
+
+                if (p.getNombre().equals(producto.getNombre())) {
+                    // Producto duplicado, no se agrega
+                    result = false;
                 }
             }
         }
-
-        // Si el producto no está en la lista de pedidos, agregarlo
-        Producto productoCopia = new Producto(producto.getNombre(), producto.getDescripcion(), producto.getPrecio(),
-                producto.getCantidadDisponible(), producto.getCategoria().ordinal(),
-                producto.getVecesComprado());
-        listaPedidos.agregar(productoCopia);
-        return true; // Producto agregado correctamente
+        if (result && producto.getCantidadDisponible() > 0) {
+            // Si el producto no está en la lista de pedidos, agregarlo
+            Producto productoCopia = new Producto(producto.getNombre(), producto.getDescripcion(), producto.getPrecio(),
+                    producto.getCantidadDisponible(), producto.getCategoria().ordinal(),
+                    producto.getVecesComprado());
+            listaPedidos.agregar(productoCopia);
+        }
+        return result;
     }
+
 
     // Getters y setters
     public String getNombreComprador() {
@@ -83,7 +90,7 @@ public class Pedido {
         double total = 0.0;
         if (listaPedidos != null && !listaPedidos.isEmpty()) {
             for (Producto producto : listaPedidos) {
-                total += producto.getPrecio();
+                total += producto.getPrecio()*producto.getCantidadDisponible();
             }
         }
         precioTotal = total;
@@ -91,24 +98,29 @@ public class Pedido {
 
 
     @Override
-    public String toString() {
-        return  "Información de la compra:\n" +
+    public String toString(){
+        return  "----------------------------------------------------------------\n" +
+                "Información de la compra:\n" +
                 "Comprador: " + nombreComprador + "\n" +
-                "Pedidos: " + listaPedidos + "\n" +
-                "Precio Total: " + precioTotal + "\n" +
-                "Método de Pago: " +
-                "Fecha de Compra: " + fechaCompra;
+                obtenerDetalleProductos() + "\n" +
+                "Método de Pago: " + metodoPago.resumen + "\n" +
+                "Fecha de Compra: " + fechaCompra + "\n" +
+                "----------------------------------------------------------------\n";
     }
 
     public String obtenerDetalleProductos() {
         StringBuilder detalleProductos = new StringBuilder();
         double total = 0.0;
 
+        int i = 1;
         if (listaPedidos != null && !listaPedidos.isEmpty()) {
             for (Producto producto : listaPedidos) {
-                detalleProductos.append("Producto: ").append(producto.getNombre())
-                        .append(", Precio: ").append(producto.getPrecio()).append("\n");
-                total += producto.getPrecio();
+                detalleProductos.append("Producto: #" + i + ": ").append(producto.getNombre())
+                        .append(", Precio: ").append(producto.getPrecio())
+                        .append(", Cantidad: ").append(producto.getCantidadDisponible())
+                        .append("\n");
+                total += producto.getPrecio()*producto.getCantidadDisponible();
+                i++;
             }
         }
 
@@ -117,5 +129,39 @@ public class Pedido {
         return detalleProductos.toString();
     }
 
+    public boolean editarCantidad(int numeroP, int cantidadReal, int newCantidad) {
+        boolean result = false;
+        if (listaPedidos != null && !listaPedidos.isEmpty()) {
+            if (numeroP-1 >= 0 && numeroP-1 <= listaPedidos.size()) {
+                Producto producto = listaPedidos.get(numeroP-1);
+                if (newCantidad <= cantidadReal) {
+                    producto.setCantidadDisponible(newCantidad);
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
 
+    public String obtenerNombreProducto(int numeroP){
+        if (numeroP-1 >= 0 && numeroP-1 <= listaPedidos.size()) {
+            Producto producto = listaPedidos.get(numeroP-1);
+            return producto.getNombre();
+        } else {
+            return "";
+        }
+    }
+
+    public int obtenerCantidadProducto(int numeroP) {
+        if (numeroP-1 >= 0 && numeroP-1 <= listaPedidos.size()) {
+            Producto producto = listaPedidos.get(numeroP-1);
+            return producto.getCantidadDisponible();
+        } else {
+            return -1;
+        }
+    }
+
+    public int sizeLista() {
+        return listaPedidos.size();
+    }
 }

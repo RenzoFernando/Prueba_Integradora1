@@ -1,6 +1,5 @@
 package co.icesi.edu.model;
 
-
 public class Usuario {
     private String nombreUsuario;
     private String contrasena;
@@ -13,6 +12,10 @@ public class Usuario {
     private String correo;
     private boolean esAdministrador;
     private TarjetaPago[] tarjetas; // Array para almacenar las tarjetas de pago
+
+    public Pedido getPedido() {
+        return pedido;
+    }
 
     private Pedido pedido;
 
@@ -35,7 +38,7 @@ public class Usuario {
         this.pedido = new Pedido(nombreUsuario);
     }
 
-    // Getters y setters
+////////////////////////////////////////////////////////////////////////////////
 
     // Métodos para asignar una tarjeta según el tipo especificado
     public boolean asignarTarjeta(int tipoTarjeta, String cardNumber, String securityCodeCVV, int installments) {
@@ -81,8 +84,6 @@ public class Usuario {
             if (tarjetas[i] != null) {
                 String x = tarjetas[i].resumen;
                 estadoTarjetas.append("Metodo de Pago ").append(i + 1).append(": ").append(x).append("\n");
-            } else {
-                estadoTarjetas.append("Metodo de Pago ").append(i + 1).append(": null\n");
             }
         }
         return estadoTarjetas.toString();
@@ -96,6 +97,73 @@ public class Usuario {
         }
         return false;
     }
+
+    public boolean addPedido(Producto obj) {
+        if (pedido == null) {
+            pedido = new Pedido(nombreUsuario);
+        }
+        return pedido.addPedido(obj);
+    }
+
+
+    public Pedido facturaPedido(int i) {
+        // Asignar el método de pago al pedido
+        pedido.setMetodoPago(tarjetas[i - 1]);
+
+        // Actualizar la fecha del pedido
+        pedido.actualizarFecha();
+
+        // Calcular el total del pedido
+        pedido.calcularTotal();
+
+        return pedido;
+    }
+
+    public String carritoActual() {
+        return pedido.obtenerDetalleProductos();
+    }
+
+    public void borrarPedidoAnterior() {
+        pedido = null;
+        pedido = new Pedido(nombreUsuario);
+    }
+
+    public boolean editarCantidad(int numeroP,int cantidadReal, int neewCantidad) {
+        return pedido.editarCantidad(numeroP, cantidadReal, neewCantidad);
+    }
+
+    public String nameProduct(int numeroP) {
+        return pedido.obtenerNombreProducto(numeroP);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // Otros métodos de la clase
@@ -141,34 +209,9 @@ public class Usuario {
         return esAdministrador;
     }
 
-    public boolean addPedido(Producto obj) {
-        if (pedido == null) {
-            pedido = new Pedido(nombreUsuario);
-        }
-        return pedido.addPedido(obj);
+
+
+    public int sizeListaPedidos() {
+        return pedido.sizeLista();
     }
-
-
-    public Pedido facturaPedido(int i) {
-        // Asignar el método de pago al pedido
-        pedido.setMetodoPago(tarjetas[i - 1]);
-
-        // Actualizar la fecha del pedido
-        pedido.actualizarFecha();
-
-        // Calcular el total del pedido
-        pedido.calcularTotal();
-
-        return pedido = new Pedido(nombreUsuario);
-    }
-
-    public String carritoActual() {
-        return pedido.obtenerDetalleProductos();
-    }
-
-    public void borrarPedidoAnterior() {
-        pedido = null;
-        pedido = new Pedido(nombreUsuario);
-    }
-
 }

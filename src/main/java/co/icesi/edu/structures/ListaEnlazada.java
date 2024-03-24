@@ -9,6 +9,18 @@ public class ListaEnlazada<T> implements Iterable<T> {
         this.cabeza = null;
     }
 
+
+    public T get(int indice) {
+        if (indice < 0 || indice >= size()) {
+            throw new IndexOutOfBoundsException("Índice fuera de rango");
+        }
+        Nodo<T> actual = cabeza;
+        for (int i = 0; i < indice; i++) {
+            actual = actual.getSiguiente();
+        }
+        return actual.getDato();
+    }
+
     public void agregar(T dato) {
         Nodo<T> nuevoNodo = new Nodo<>(dato);
         if (cabeza == null) {
@@ -150,5 +162,17 @@ public class ListaEnlazada<T> implements Iterable<T> {
 
     public Nodo<T> getCabeza() {
         return cabeza;
+    }
+
+    public Nodo<T> buscarForString(String valor) {
+        Nodo<T> actual = cabeza;
+        while (actual != null) {
+            // Aquí comparas el valor del nodo actual con el valor proporcionado
+            if (actual.getDato().toString().equals(valor)) {
+                return actual;
+            }
+            actual = actual.getSiguiente();
+        }
+        return null;
     }
 }
